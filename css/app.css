@@ -1,0 +1,63 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+.clearfix:after {
+    clear: both;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p {
+	font-family: 'Ubuntu', Helvetica, sans-serif;
+	color: #fff;
+}
+body {
+	background: url(../img/nightlife_fadded.png) repeat 0 0;
+	background-size: cover;
+	text-align: center;
+	
+}
+.hidden {
+	display: none;
+}
+#search a,
+#location{
+	font-size: 0.72rem;
+
+}
+
+.event-container{
+	
+	
+	background-color: grey;
+	padding-top: 10px;
+	
+
+    
+}
+
+
+.event-container  li {
+	display: inline-block;
+	margin-left: 5px;
+	font-size: 0.65rem;
+}
+
+
+
+
+
+
