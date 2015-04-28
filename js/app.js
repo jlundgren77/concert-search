@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+
 	$("#search").submit(function(event){
 		event.preventDefault();
 		var city = $("#location").val();
@@ -9,8 +11,10 @@ $(document).ready(function(){
 	
 });
 
+
+//get event info form last.fm api
 var getRequest = function(city){
-	
+
 	var apiKey = "2565e9dfd67470ca4cfef71af08d9279";
 	var city = city;
 	var url = "http://ws.audioscrobbler.com/2.0/";
@@ -20,26 +24,30 @@ var getRequest = function(city){
 		url: search,
 		dataType: "json",
 		type: "GET",
+
 	})
 	.done(function(result){
-
+        
 		
 		$.each(result.events.event, function(key, value){
+			//get latitude and longitutde of venue to pass to yelp api
 			var venueLatitude = value.venue.location['geo:point']['geo:lat'];
 			var venueLongitude = value.venue.location['geo:point']['geo:long'];
-	        console.log(value.venue.name + venueLatitude + " " + venueLongitude);
-	        getYelp(venueLatitude, venueLongitude, city);
+	        // console.log(value.venue.name + venueLatitude + " " + venueLongitude);
+	        var venue = value.venue.name;
+	        
+	        getYelp(venueLatitude, venueLongitude, city, venue);
+            
+	        //add last.fm event info to page
 			$('.results-container #event-list').append(showEventInfo(value));
 		});
 	})
 
 };
 
-var getYelp = function(lat, lon, city){
+var getYelp = function(lat, lon, city, venue){
      
-     
-	
-	var auth = {
+     	var auth = {
 		consumerKey: "yKyfPqeZJWNE2xRgWZoq0Q",
 		consumerSecret: "NwfAzqthyOenVj_ZsKuMHUvsmTs",
 		accessToken: "r2fInMUZfXpV3nSqi18_63R9PtcZaTNk",
@@ -57,8 +65,10 @@ var getYelp = function(lat, lon, city){
 	};
 	parameters = [];
 	parameters.push(['term', terms]);
-	parameters.push(['location', near]);
-	parameters.push(['cll', lat_long]);
+	// parameters.push(['location', near]);
+	parameters.push(['ll', lat_long]);
+	parameters.push(['radius_filter', '400']);
+	parameters.push(['limit', '5']);
 	parameters.push(['callback', 'cb']);
 	parameters.push(['oauth_consumer_key', auth.consumerKey]);
 	parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
@@ -73,30 +83,26 @@ var getYelp = function(lat, lon, city){
 	OAuth.SignatureMethod.sign(message, accessor);
 	var parameterMap = OAuth.getParameterMap(message.parameters);
 	parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature)
-	// console.log(parameterMap);
+	
 	$.ajax({
 	  'url': message.action,
 	  'data': parameterMap,
 	  'cache': true,
 	  'dataType': 'jsonp',
-	  'jsonpCallback': 'cb',
-	 //  'success': function(data, textStats, XMLHttpRequest) {
-	 //    // console.log(data.businesses);
-	 //    // var output = prettyPrint(data);
-	 //    // $.each(data.businesses, function(key, value){
-	 //    // 	console.log(data.businesses);
-	 //    // 	// showInTheArea(value);
-	 //    // });
-		// for(business in data.businesses)
-		// {
-		// 	console.log(business);
-		// }
+	  // 'jsonpCallback': 'cb',
+	   success: function(data, textStats, XMLHttpRequest) {
+	    console.log(data.businesses);
+	    showInTheArea(data);
+	    // $.each(data.businesses, function(key, value){
+	    // 	showInTheArea(data.businesses);
+	    // });
 	   
-	 //  }
-	})
-	.done(function(data){
-		console.log(data + "for: " + lat + lon);
-	})
+	  },
+	  error: function(jqHHR, textStats, errorThrown){
+	  		console.log(errorThrown);
+	  }
+	});
+	
 };	
 	
 	
@@ -125,9 +131,7 @@ var showEventInfo = function(data){
 };
 
 var showInTheArea = function(data){
-	var eventDiv = $('.templates .event-container').clone();
-	var placesElem = eventDiv.find('.places');
-	var place = "<li class='business'>" + data.name + "</li>";
-	console.log(place);
+	
+	// console.log(data);
 };
 
