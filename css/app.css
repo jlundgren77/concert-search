@@ -44,20 +44,25 @@ body {
 	
 	background-color: grey;
 	padding-top: 10px;
+	margin-bottom: 10px;
+	border: 1px solid white;
 	
 
-    
 }
-
 
 .event-container  li {
 	display: inline-block;
 	margin-left: 5px;
 	font-size: 0.65rem;
+
 }
 
-
-
+.event-list li {
+	border: 1px solid white;
+}
+[class*="column"] + [class*="column"]:last-child {
+	float: left;
+}
 
 
 
