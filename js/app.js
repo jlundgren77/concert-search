@@ -5,7 +5,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		var city = $("#location").val();
         getRequest(city);
-
+        
 	})
 
 	
@@ -36,10 +36,11 @@ var getRequest = function(city){
 	        // console.log(value.venue.name + venueLatitude + " " + venueLongitude);
 	        var venue = value.venue.name;
 	        
-	        getYelp(venueLatitude, venueLongitude, city, venue);
+	       getYelp(venueLatitude, venueLongitude, city, venue);
             
 	        //add last.fm event info to page
 			$('.results-container #event-list').append(showEventInfo(value));
+			
 		});
 	})
 
@@ -47,7 +48,7 @@ var getRequest = function(city){
 
 var getYelp = function(lat, lon, city, venue){
      
-     	var auth = {
+    var auth = {
 		consumerKey: "yKyfPqeZJWNE2xRgWZoq0Q",
 		consumerSecret: "NwfAzqthyOenVj_ZsKuMHUvsmTs",
 		accessToken: "r2fInMUZfXpV3nSqi18_63R9PtcZaTNk",
@@ -67,7 +68,7 @@ var getYelp = function(lat, lon, city, venue){
 	parameters.push(['term', terms]);
 	// parameters.push(['location', near]);
 	parameters.push(['ll', lat_long]);
-	parameters.push(['radius_filter', '400']);
+	parameters.push(['radius_filter', '200']);
 	parameters.push(['limit', '5']);
 	parameters.push(['callback', 'cb']);
 	parameters.push(['oauth_consumer_key', auth.consumerKey]);
@@ -91,8 +92,9 @@ var getYelp = function(lat, lon, city, venue){
 	  'dataType': 'jsonp',
 	  // 'jsonpCallback': 'cb',
 	   success: function(data, textStats, XMLHttpRequest) {
-	    console.log(data.businesses);
-	    showInTheArea(data);
+	   
+	   	
+	    $('.results-container .event-container').append(showInTheArea(data));
 	    // $.each(data.businesses, function(key, value){
 	    // 	showInTheArea(data.businesses);
 	    // });
@@ -131,7 +133,16 @@ var showEventInfo = function(data){
 };
 
 var showInTheArea = function(data){
-	
-	// console.log(data);
+	var businessData = data.businesses;
+	// //get business names
+	var placesDiv = $('.templates .places-container').clone();
+    var placesElem = placesDiv.find('.places');
+    $.each(businessData, function(key, value){
+    	
+    	placesElem.append('<li>' + value.name + '</li>');
+    });
+    console.log(placesDiv);
+    return placesDiv;
+
 };
 
