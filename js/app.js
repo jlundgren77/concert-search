@@ -43,7 +43,9 @@ var getRequest = function(city){
 			
 		});
 	})
-
+	.fail(function(jqXHR, error, errorThrown){
+		console.log(errorThrown);
+	});
 };
 
 var getYelp = function(lat, lon, city, venue){
@@ -141,7 +143,7 @@ var showInTheArea = function(data){
     	
     	placesElem.append('<li>' + value.name + '</li>');
     });
-    console.log(placesDiv);
-    return placesDiv;
+    // console.log(placesDiv);
+    return placesElem;
 
 };
