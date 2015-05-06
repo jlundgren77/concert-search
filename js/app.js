@@ -36,10 +36,12 @@ var getRequest = function(city){
 	        // console.log(value.venue.name + venueLatitude + " " + venueLongitude);
 	        var venue = value.venue.name;
 	        
-	       getYelp(venueLatitude, venueLongitude, city, venue);
-            
-	        //add last.fm event info to page
+	        //call to yelp api to get businesses near venue
+	        getYelp(venueLatitude, venueLongitude, city, venue);
+           	//add last.fm event info to page
 			$('.results-container #event-list').append(showEventInfo(value));
+			// $('.results-container #event-list').append(showInTheArea(busniess));
+			// showInTheArea(businesses);
 			
 		});
 	})
@@ -48,6 +50,7 @@ var getRequest = function(city){
 	});
 };
 
+//function to call yelp api
 var getYelp = function(lat, lon, city, venue){
      
     var auth = {
@@ -87,6 +90,8 @@ var getYelp = function(lat, lon, city, venue){
 	var parameterMap = OAuth.getParameterMap(message.parameters);
 	parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature)
 	
+	
+	
 	$.ajax({
 	  'url': message.action,
 	  'data': parameterMap,
@@ -95,21 +100,31 @@ var getYelp = function(lat, lon, city, venue){
 	  // 'jsonpCallback': 'cb',
 	   success: function(data, textStats, XMLHttpRequest) {
 	   
-	   	
-	    $('.results-container .event-container').append(showInTheArea(data));
-	    // $.each(data.businesses, function(key, value){
-	    // 	showInTheArea(data.businesses);
-	    // });
-	   
+	    //array for business near event
+	   	var business = [];
+	    // $('.results-container .event-container').append(showInTheArea(data));
+	    
+	    $.each(data.businesses, function(key, value){
+	    	business.push(value.name);
+
+	    	
+	    });
+
+	    //call to function to handle busniess array
+	  console.log(venue);
+	  showInTheArea(business);
+	    
 	  },
 	  error: function(jqHHR, textStats, errorThrown){
 	  		console.log(errorThrown);
 	  }
+
 	});
 	
+	
 };	
-	
-	
+
+
 
 
 var showEventInfo = function(data){
@@ -135,15 +150,5 @@ var showEventInfo = function(data){
 };
 
 var showInTheArea = function(data){
-	var businessData = data.businesses;
-	// //get business names
-	var placesDiv = $('.templates .places-container').clone();
-    var placesElem = placesDiv.find('.places');
-    $.each(businessData, function(key, value){
-    	
-    	placesElem.append('<li>' + value.name + '</li>');
-    });
-    // console.log(placesDiv);
-    return placesElem;
-
-};
+	console.log(data);
+};	
