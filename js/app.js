@@ -18,7 +18,7 @@ var getRequest = function(city){
 	var apiKey = "2565e9dfd67470ca4cfef71af08d9279";
 	var city = city;
 	var url = "http://ws.audioscrobbler.com/2.0/";
-	var search = url + "?method=geo.getevents&location=" + city + "&distance=30&api_key=2565e9dfd67470ca4cfef71af08d9279&format=json";
+	var search = url + "?method=geo.getevents&location=" + city + "&distance=30&api_key=" + apiKey + "&format=json";
 
 	var result = $.ajax({
 		url: search,
@@ -145,4 +145,3 @@ var showInTheArea = function(data){
     return placesDiv;
 
 };
-
