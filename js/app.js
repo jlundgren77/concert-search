@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 
 	$("#search").submit(function(event){
+		$('#event-list').html('');
+		$('#search-results').html('');
 		event.preventDefault();
 		var city = $("#location").val();
         getRequest(city);
@@ -28,6 +30,18 @@ var getRequest = function(city){
 	})
 	.done(function(result){
         
+        //show number of concerts in area in search-results
+        if (result.events === undefined){
+        	$('#search-results').html(showSearchResults(0));
+        }
+        else
+        {
+        	$('#search-results').html(showSearchResults(result.events.event.length));
+        };
+        
+ 
+        
+		
 		
 		$.each(result.events.event, function(key, value){
 			//get latitude and longitutde of venue to pass to yelp api
@@ -46,7 +60,7 @@ var getRequest = function(city){
 		});
 	})
 	.fail(function(jqXHR, error, errorThrown){
-		console.log(errorThrown);
+		console.log(error);
 	});
 };
 
@@ -111,7 +125,7 @@ var getYelp = function(lat, lon, city, venue){
 	    });
 
 	    //call to function to handle busniess array
-	  console.log(venue);
+	  // console.log(venue);
 	  showInTheArea(business);
 	    
 	  },
@@ -125,7 +139,19 @@ var getYelp = function(lat, lon, city, venue){
 };	
 
 
+var showSearchResults = function(numConcerts){
+	var results = "";
+	if(numConcerts == undefined){
+		results += "There are <strong>0</strong> concerts near you tonight";
+	}
+	else {
+		 results += 'There are <strong>' + numConcerts + '</strong> concerts near you tonight';
+	}
+	
+	return results
+	
 
+}
 
 var showEventInfo = function(data){
 	
@@ -150,7 +176,7 @@ var showEventInfo = function(data){
 };
 
 var showInTheArea = function(data){
-	console.log(data);
+	// console.log(data);
 	var placesDiv = $('.templates .places-container').clone();
 	var places = placesDiv.find('.places');
 	$.each(data, function(key, value){
