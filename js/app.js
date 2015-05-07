@@ -151,4 +151,10 @@ var showEventInfo = function(data){
 
 var showInTheArea = function(data){
 	console.log(data);
+	var placesDiv = $('.templates .places-container').clone();
+	var places = placesDiv.find('.places');
+	$.each(data, function(key, value){
+		places.append('<li>' + value + '</li');
+	});
+	$('#event-list .event-container').append(placesDiv);
 };	
