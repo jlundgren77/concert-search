@@ -59,7 +59,7 @@ var getRequest = function(city){
 	        var venue = value.venue.name;
 	        
 	        //call to yelp api to get businesses near venue
-	        getYelp(venueLatitude, venueLongitude, city, venue);
+	        getYelp(venueLatitude, venueLongitude, city, venue, key);
            	//add last.fm event info to page
 			$('.results-container #event-list').append(showEventInfo(value));
 			// $('.results-container #event-list').append(showInTheArea(busniess));
@@ -73,7 +73,7 @@ var getRequest = function(city){
 };
 
 //function to call yelp api
-var getYelp = function(lat, lon, city, venue){
+var getYelp = function(lat, lon, city, venue, eventIndex){
      
     var auth = {
 		consumerKey: "yKyfPqeZJWNE2xRgWZoq0Q",
@@ -134,7 +134,7 @@ var getYelp = function(lat, lon, city, venue){
 
 	    //call to function to handle busniess array
 	  // console.log(venue);
-	  showInTheArea(business);
+	  showInTheArea(business, eventIndex);
 	    
 	  },
 	  error: function(jqHHR, textStats, errorThrown){
@@ -184,12 +184,12 @@ var showEventInfo = function(data){
 	
 };
 
-var showInTheArea = function(data){
+var showInTheArea = function(data, eventIndex){
 	// console.log(data);
 	var placesDiv = $('.templates .places-container').clone();
 	var places = placesDiv.find('.places');
 	$.each(data, function(key, value){
-		places.append('<li>' + value + '</li');
+		places.append('<li>' + value + '</li>');
 	});
-	$('#event-list .event-container').append(placesDiv);
+	$('#event-list .event-container').eq(eventIndex).append(placesDiv);
 };	
