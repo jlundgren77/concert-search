@@ -165,7 +165,7 @@ var showSearchResults = function(numConcerts){
 var showEventInfo = function(data){
 	
 	
-	var eventDiv = $('.templates .event-container').clone();
+	var eventDiv = $('.templates .events').clone();
 	var artistElem = eventDiv.find('.artist');
 	artistElem.text(data.artists.headliner);
 

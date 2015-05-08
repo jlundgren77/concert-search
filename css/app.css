@@ -59,14 +59,17 @@ body {
 	display: inline-block;
 	margin-left: 5px;
 	font-size: 0.65rem;
-
+   
 
 }
 
 .event-list li {
 	border: 1px solid white;
 }
-
+.places a {
+	color: #fff;
+	font-size: 0.85rem;
+}
 [class*="column"] + [class*="column"]:last-child {
 	float: left;
 }
