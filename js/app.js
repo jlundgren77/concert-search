@@ -1,12 +1,20 @@
 $(document).ready(function(){
 
-
+     
 	$("#search").submit(function(event){
 		$('#event-list').html('');
 		$('#search-results').html('');
 		event.preventDefault();
 		var city = $("#location").val();
-        getRequest(city);
+		if (city == ''){
+			$('.error').show();
+		}
+		else{
+			$('.error').hide();
+			getRequest(city);
+		}
+		
+        
         
 	})
 
@@ -131,6 +139,7 @@ var getYelp = function(lat, lon, city, venue){
 	  },
 	  error: function(jqHHR, textStats, errorThrown){
 	  		console.log(errorThrown);
+
 	  }
 
 	});
@@ -138,7 +147,7 @@ var getYelp = function(lat, lon, city, venue){
 	
 };	
 
-
+//return message to display how many concerts the call last.fm returned
 var showSearchResults = function(numConcerts){
 	var results = "";
 	if(numConcerts == undefined){

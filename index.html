@@ -20,7 +20,7 @@
   <body>
     <section id="intro">
     <h1>Concert Tonight</h1>
-      <form id="search">
+      <form id="search" data-abide>
         <div class="row">
           <div class="small-6 small-offset-3 columns">
            <div class="row collapse prefix-round">
@@ -28,11 +28,18 @@
               <a href="#" class="button prefix"><i class="fa fa-search"></i></a>
             </div>
             <div class="small-9 columns">
+              
               <input type="text" id="location" placeholder="location" required>
+             
             </div>
+             
            </div>
           </div>
-          
+         <div class="row">
+          <div class="small-6 small-offset-3 columns">
+            <p class="error">Enter Your Location</p>
+          </div>
+         </div> 
         </div>
       </form>
     </section>
