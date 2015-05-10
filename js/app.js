@@ -6,12 +6,20 @@ $(document).ready(function(){
 		$('#search-results').html('');
 		event.preventDefault();
 		var city = $("#location").val();
+        var yelpTerm = $("#yelp-search").val();
+        
+        //set a default value for yelp search term
+        if(yelpTerm == ''){
+        	yelpTerm = "restaurants";
+        } 
+        
 		if (city == ''){
 			$('.error').show();
 		}
 		else{
 			$('.error').hide();
-			getRequest(city);
+
+			getRequest(city, yelpTerm);
 		}
 		
         
@@ -23,12 +31,12 @@ $(document).ready(function(){
 
 
 //get event info form last.fm api
-var getRequest = function(city){
+var getRequest = function(city, terms){
 
 	var apiKey = "2565e9dfd67470ca4cfef71af08d9279";
 	var city = city;
 	var url = "http://ws.audioscrobbler.com/2.0/";
-	var search = url + "?method=geo.getevents&location=" + city + "&distance=30&api_key=" + apiKey + "&format=json";
+	var search = url + "?method=geo.getevents&location=" + city + "&distance=50&limit=20&api_key=" + apiKey + "&format=json";
 
 	var result = $.ajax({
 		url: search,
@@ -59,7 +67,7 @@ var getRequest = function(city){
 	        var venue = value.venue.name;
 	        
 	        //call to yelp api to get businesses near venue
-	        getYelp(venueLatitude, venueLongitude, city, venue, key);
+	        getYelp(venueLatitude, venueLongitude, city, venue, terms, key);
            	//add last.fm event info to page
 			$('.results-container #event-list').append(showEventInfo(value));
 			// $('.results-container #event-list').append(showInTheArea(busniess));
@@ -73,7 +81,7 @@ var getRequest = function(city){
 };
 
 //function to call yelp api
-var getYelp = function(lat, lon, city, venue, eventIndex){
+var getYelp = function(lat, lon, city, venue, term, eventIndex){
      
     var auth = {
 		consumerKey: "yKyfPqeZJWNE2xRgWZoq0Q",
@@ -84,7 +92,7 @@ var getYelp = function(lat, lon, city, venue, eventIndex){
 			signatureMethod: "HMAC-SHA1"
 		}
 	};
-	var terms = 'food';
+	var terms = term;
 	var near = city;
 	var lat_long = lat + "," + lon;
 	var accessor = {
@@ -95,7 +103,7 @@ var getYelp = function(lat, lon, city, venue, eventIndex){
 	parameters.push(['term', terms]);
 	// parameters.push(['location', near]);
 	parameters.push(['ll', lat_long]);
-	parameters.push(['radius_filter', '200']);
+	parameters.push(['radius_filter', '400']);
 	parameters.push(['limit', '5']);
 	parameters.push(['callback', 'cb']);
 	parameters.push(['oauth_consumer_key', auth.consumerKey]);
@@ -134,7 +142,7 @@ var getYelp = function(lat, lon, city, venue, eventIndex){
 
 	    //call to function to handle busniess array
 	  // console.log(venue);
-	  showInTheArea(business, eventIndex);
+	  showInTheArea(business, eventIndex, data);
 	    
 	  },
 	  error: function(jqHHR, textStats, errorThrown){
@@ -166,13 +174,25 @@ var showEventInfo = function(data){
 	
 	
 	var eventDiv = $('.templates .events').clone();
-	var artistElem = eventDiv.find('.artist');
-	artistElem.text(data.artists.headliner);
-
+	var titleElem = eventDiv.find('.title');
+	// titleElem.text(data.title);
+    
+    titleElem.attr("href", data.url).text(data.artists.headliner);
+   
+    
 	var venueElem = eventDiv.find('.venue');
 	venueElem.text(data.venue.name);
     
-    
+    var eventPic = eventDiv.find('.event-pic img');
+    var pic = data.image[1]["#text"];
+    if (pic == ""){
+    	eventPic.attr('src', data.venue.image[1]["#text"]);
+    }
+    else{
+    	 eventPic.attr('src', data.image[1]["#text"]);
+    }
+   
+    // console.log(data.image[2]["#text"]);
 	var venueLocationElem = eventDiv.find('.venue-location');
 
 	venueLocationElem.text(data.venue.location.street + " " + data.venue.location.city);
@@ -184,12 +204,13 @@ var showEventInfo = function(data){
 	
 };
 
-var showInTheArea = function(data, eventIndex){
-	// console.log(data);
+var showInTheArea = function(data, eventIndex, yelpData){
+	
 	var placesDiv = $('.templates .places-container').clone();
 	var places = placesDiv.find('.places');
 	$.each(data, function(key, value){
-		places.append('<li>' + value + '</li>');
+		
+		places.append('<li><a href="' + yelpData.businesses[key].url + '" target="_blank">' + value + '</li></a>');
 	});
 	$('#event-list .event-container').eq(eventIndex).append(placesDiv);
 };	

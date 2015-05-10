@@ -21,7 +21,7 @@
   <body>
     <section id="intro">
     <h1>Concert Tonight</h1>
-      <form id="search" data-abide>
+      <form id="search">
         <div class="row">
           <div class="small-6 small-offset-3 columns">
            <div class="row collapse prefix-round">
@@ -30,7 +30,7 @@
             </div>
             <div class="small-9 columns">
               
-              <input type="text" id="location" placeholder="location" required>
+              <input type="text" id="location" placeholder="location">
              
             </div>
              
@@ -40,9 +40,20 @@
           <div class="small-6 small-offset-3 columns">
             <p class="error">Enter Your Location</p>
           </div>
+         </div>
+         <div class="row">
+          <div class="small-8 small-offset-2 large-4 large-offset-4 columns">
+            <label>Where to head before or after?
+            <input type="text" id="yelp-search" placeholder="beer, cocktails, food, pizza, etc (optional)" />
+            </label>
+          </div>  
+         </div>
+         <div class="row">
+          <input type="submit" value="GO" id="go" tabindex="-1" />
          </div> 
         </div>
       </form>
+
     </section>
 
     
@@ -62,14 +73,17 @@
             <div class="event-container">
              <!--  <a class="th left" href="">
               <img src=""></a> -->
-              <h3 class="artist text-center"></h3>
+              <a class="title" href="" target="_blank"></a>
+             <!--  <h3 class="title text-center"></h3> -->
+              
               <p class="venue"></p>
               <p class="venue-location"><i class="fa fa-map-marker map-icon"></i></p>
-              
-              <h4 class="area">In the Area</h4>
+              <p class="event-pic"><img src="" title="event-picture"></p>
+              <!-- <h4 class="area">In the Area</h4> -->
             </div>
           </div>    
-          <div class="places-container">    
+          <div class="places-container">
+              <h4 class="area">Places Near the Venue</h4>    
               <ul class="places">
                 
               </ul>

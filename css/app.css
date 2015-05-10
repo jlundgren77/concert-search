@@ -20,7 +20,9 @@ h1,
 h2,
 h3,
 h4,
-p {
+p,
+label,
+a {
 	font-family: 'Ubuntu', Helvetica, sans-serif;
 	color: #fff;
 }
@@ -33,11 +35,27 @@ body {
 .hidden {
 	display: none;
 }
+
+#go {
+	position: absolute;
+	height: 0px;
+	width: 0px;
+	border: none;
+	padding: 0px;
+}
 #search a,
 #location{
 	font-size: 0.72rem;
 
 }
+
+#yelp-search {
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	font-size: 0.65rem;
+}
+
 .error{
 	color: red;
 	display: none;
@@ -49,19 +67,46 @@ body {
 .event-container{
 	
 	
-	background-color: grey;
-	padding-top: 10px;
+	background-color: #fff;
+	padding-top: 20px;
 	margin-bottom: 10px;
-	border: 1px solid white;
-	height: 275px;
+	border: 1px solid grey;
+	height: 400px;
+	position: relative;
+	webkit-box-shadow: 6px 6px 15px 2px rgba(0,0,0,0.57);
+	-moz-box-shadow: 6px 6px 15px 2px rgba(0,0,0,0.57);
+	box-shadow: 6px 6px 15px 2px rgba(0,0,0,0.57);
 
-	
+	background: linear-gradient(#fff, grey);
 
+
+}
+
+.event-container h3,p,a {
+	color: grey;
+}
+.event-container a {
+	font-size: 1.5rem;
+	margin-bottom: 10px;
+}
+
+.event-container img {
+	height: 50px;
+	width: 50px;
+
+}
+.places-container {
+	background-color: grey;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 40%;
+	/*background: linear-gradient(0deg, grey, 80%, #fff);*/
 }
 
 .event-container  li {
 	display: inline-block;
-	margin-left: 5px;
+	margin-left: 8px;
 	font-size: 0.65rem;
    
 
@@ -72,7 +117,11 @@ body {
 }
 .places a {
 	color: #fff;
-	font-size: 0.85rem;
+	font-size: 0.75rem;
+}
+
+.places a:hover {
+	color: #dcdcdc;
 }
 [class*="column"] + [class*="column"]:last-child {
 	float: left;
