@@ -1,5 +1,25 @@
 $(document).ready(function(){
 
+	//check if browser go location is enabled
+	if (navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(function(position){
+			//get user location
+			var locCurrent = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+			//get users geolocation by country
+			var geocoder = new google.maps.Geocoder();
+           
+
+			geocoder.geocode({ 'latLng': locCurrent }, function (results, status){
+				var locItemCount = results.length;
+				var locCountryCount = locItemCount - 1;
+				var locCountryName = results[locCountryCount].formatted_address;
+				console.log(results);
+			})
+		})
+
+	
+	}
      
 	$("#search").submit(function(event){
 		$('#event-list').html('');

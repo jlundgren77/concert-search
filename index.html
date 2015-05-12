@@ -12,6 +12,7 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="js/app.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDtCxeeOqvZ6hHHwLcMKmuTiP0DA-xy3Fg&sensor=false&v=3&libraries=geometry"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -36,21 +37,25 @@
              
            </div>
           </div>
-         <div class="row">
-          <div class="small-6 small-offset-3 columns">
-            <p class="error">Enter Your Location</p>
-          </div>
-         </div>
-         <div class="row">
-          <div class="small-8 small-offset-2 large-4 large-offset-4 columns">
-            <label>Where to head before or after?
-            <input type="text" id="yelp-search" placeholder="beer, cocktails, food, pizza, etc (optional)" />
-            </label>
-          </div>  
-         </div>
-         <div class="row">
-          <input type="submit" value="GO" id="go" tabindex="-1" />
-         </div> 
+         <div class="small-12 columns"> 
+           <div class="row">
+            <div class="small-6 small-offset-3 columns">
+              <p class="error">Enter Your Location</p>
+            </div>
+           </div>
+           <div class="row">
+            <div class="small-8 small-offset-2 large-4 large-offset-4 columns">
+              <label>Where to head before or after?
+              <input type="text" id="yelp-search" placeholder="beer, cocktails, food, pizza, etc (optional)" />
+              </label>
+            </div>  
+           </div>
+           <div class="row">
+            
+              <input type="submit" value="GO" id="go" tabindex="-1" />
+           
+           </div> 
+        </div>   
         </div>
       </form>
 
