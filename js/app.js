@@ -142,7 +142,7 @@ var getYelp = function(lat, lon, city, venue, term, eventIndex){
 
 	    //call to function to handle busniess array
 	  // console.log(venue);
-	  showInTheArea(business, eventIndex, data);
+	  showInTheArea(business, terms, eventIndex, data);
 	    
 	  },
 	  error: function(jqHHR, textStats, errorThrown){
@@ -204,10 +204,11 @@ var showEventInfo = function(data){
 	
 };
 
-var showInTheArea = function(data, eventIndex, yelpData){
+var showInTheArea = function(data, terms, eventIndex, yelpData){
 	
 	var placesDiv = $('.templates .places-container').clone();
 	var places = placesDiv.find('.places');
+	
 	$.each(data, function(key, value){
 		
 		places.append('<li><a href="' + yelpData.businesses[key].url + '" target="_blank">' + value + '</li></a>');
