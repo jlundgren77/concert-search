@@ -27,10 +27,18 @@ a {
 	color: #fff;
 }
 body {
-	background: url(../img/nightlife_fadded.png) repeat 0 0;
-	background-size: cover;
+	/*background: url(../img/nightlife_fadded.png) repeat 0 0;*/
+	/*background-size: cover;*/
 	text-align: center;
-	
+	background-color: rgba(221, 217, 211, 0.5);
+}
+
+#header{
+	background: url(../img/nightlife.jpg);
+	background-size: cover;
+	height: 450px;
+	width: 100%;
+	border: 2px solid rgba(255, 255, 255, 0.2)
 }
 .hidden {
 	display: none;
